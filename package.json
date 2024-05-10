@@ -1,0 +1,46 @@
+{
+  "name": "dice2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --port 3000 --mode development --open --hot",
+    "build": "webpack --mode production",
+    "test": "jest --watchAll",
+    "coverage": "jest --collectCoverage"
+  },
+  "keywords": [],
+  "author": "Vikash Vishwakarma",
+  "license": "ISC",
+  "dependencies": {
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "css-loader": "^7.1.1",
+    "html-webpack-plugin": "^5.6.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "source-map-loader": "^5.0.0",
+    "ts-jest": "^29.1.2",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    }
+  },
+  "setupFilesAfterEnv": [
+    "<rootDir>/jest-setup.js"
+  ]
+}
