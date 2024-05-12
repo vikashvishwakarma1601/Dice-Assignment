@@ -39,7 +39,7 @@ const Dropdown = ({
         id={label}
         onChange={selecthandler}
       >
-        <Option value="">Please choose an option</Option>
+        {!!options.length && <Option value="">Please choose an option</Option>}
         {renderOptions()}
       </BasicDropdown>
     </Container>
