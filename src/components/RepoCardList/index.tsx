@@ -38,7 +38,7 @@ const RepoCardList = ({ data = {}, children }: RepoCardListProps<any>) => {
               </Card.Content>
               <Card.Footer>
                 <TextWrapper>
-                  Stars : <span>4+</span>
+                  <strong> Stars</strong> : <span>{item.stargazers_count}</span>
                 </TextWrapper>
               </Card.Footer>
             </Card>

@@ -23,7 +23,6 @@ export const ContentWrapper = styled.div`
 
 export const TextWrapper = styled.p`
   width: 100%;
-  max-height: 45px;
   padding: 0;
   margin: 0;
   overflow-y: scroll;
