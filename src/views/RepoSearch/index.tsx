@@ -30,6 +30,10 @@ const RepoSearch = () => {
   );
 
   const handleFilterStatus = (status: boolean) => (event: React.MouseEvent) => {
+    if (!status) {
+      setSortType("");
+      setOrderType("");
+    }
     setFilterActive(status);
   };
 
@@ -56,11 +60,13 @@ const RepoSearch = () => {
               label="Select Type"
               onSelect={setSortType}
               options={sortTypeOptions}
+              selected={sortType}
             />
             <Dropdown
               label="Select Order"
               onSelect={setOrderType}
               options={orderTypeOptions}
+              selected={orderType}
             />
             <FilterWrapper>
               <Button onClick={handleFilterStatus(true)}>Apply</Button>

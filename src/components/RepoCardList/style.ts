@@ -14,6 +14,7 @@ export const Container = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

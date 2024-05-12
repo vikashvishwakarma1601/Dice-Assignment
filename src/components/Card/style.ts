@@ -13,8 +13,17 @@ export const BasicCard = styled.div`
   gap: 0.5rem;
 `;
 
-export const CardHeader = styled.div``;
+export const CardHeader = styled.div`
+  width: 100%;
+`;
 
-export const CardContent = styled.div``;
+export const CardContent = styled.div`
+  width: 100%;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+`;
 
-export const CardFooter = styled.div``;
+export const CardFooter = styled.div`
+  width: 100%;
+`;

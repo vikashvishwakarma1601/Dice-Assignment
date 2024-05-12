@@ -7,10 +7,16 @@ interface DropdownProps {
     label: string;
     value: string | number;
   }[];
+  readonly selected?: string | number;
   onSelect?: (val: string) => void;
 }
 
-const Dropdown = ({ label, options = [], onSelect }: DropdownProps) => {
+const Dropdown = ({
+  label,
+  options = [],
+  selected = "",
+  onSelect,
+}: DropdownProps) => {
   const selecthandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
     onSelect && onSelect(value);
@@ -27,7 +33,12 @@ const Dropdown = ({ label, options = [], onSelect }: DropdownProps) => {
   return (
     <Container>
       <label htmlFor={label}>{label}</label>
-      <BasicDropdown name={label} id={label} onChange={selecthandler}>
+      <BasicDropdown
+        value={selected}
+        name={label}
+        id={label}
+        onChange={selecthandler}
+      >
         <Option value="">Please choose an option</Option>
         {renderOptions()}
       </BasicDropdown>
