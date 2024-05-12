@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Input,
@@ -17,6 +17,7 @@ const RepoSearch = () => {
   const [orderType, setOrderType] = useState<string>("");
 
   const [isFilterActive, setFilterActive] = useState<boolean>(false);
+  const isMountedRef = useRef<boolean>(false);
 
   const debounce = useDebounce(setQuery);
 
@@ -24,8 +25,7 @@ const RepoSearch = () => {
     process.env.REACT_GITHUB_API,
     {
       queryParams: ["q", "sort", "order"],
-      timeoutDelay: 10,
-      enableRetry: true,
+      retryLimit: 2,
     }
   );
 
@@ -35,14 +35,22 @@ const RepoSearch = () => {
       setOrderType("");
     }
     setFilterActive(status);
+    fetchData({
+      q: query,
+      ...(status && { sort: sortType, order: orderType }),
+    });
   };
 
   useEffect(() => {
-    fetchData({
-      q: query,
-      ...(isFilterActive && { sort: sortType, order: orderType }),
-    });
-  }, [query, isFilterActive]);
+    // Avoid feching on initial render
+    if (isMountedRef.current) {
+      fetchData({
+        q: query,
+        ...(isFilterActive && { sort: sortType, order: orderType }),
+      });
+    }
+    isMountedRef.current = true;
+  }, [query]);
 
   return (
     <Container>

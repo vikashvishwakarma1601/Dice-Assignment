@@ -2,33 +2,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { urlBuilder } from "../utils/fetchUtils";
 
-interface FetchProps {
-  readonly url: string;
-}
-
 interface Options {
-  readonly enableRetry?: boolean;
-  readonly retryLimit?: number;
   readonly queryParams?: string[];
-  readonly timeoutDelay?: number;
+  readonly retryLimit?: number;
 }
 
 export const useFetch = (url: string, options?: Options): any => {
-  const {
-    enableRetry = false,
-    retryLimit = 2,
-    queryParams = [],
-    timeoutDelay = 5,
-  } = options || {};
+  const { queryParams = [], retryLimit = 1 } = options || {};
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [data, setData] = useState<any>([]);
 
   const fetchTimeoutId = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // const fetchAbortController = useRef<AbortController>(new AbortController());
 
-  function fetchData(params: any) {
+  function fetchData(params: any, retryLimit: number) {
     const requUrl = urlBuilder(url, queryParams, params);
 
     fetch(requUrl)
@@ -39,16 +27,20 @@ export const useFetch = (url: string, options?: Options): any => {
         clearTimeout(fetchTimeoutId.current as ReturnType<typeof setTimeout>);
       })
       .catch((err) => {
-        setIsLoading(false);
-        setError("Failed to fetch!");
-        clearTimeout(fetchTimeoutId.current as ReturnType<typeof setTimeout>);
+        if (retryLimit > 0) {
+          fetchData(params, retryLimit - 1);
+        } else {
+          setIsLoading(false);
+          setError("Failed to fetch!");
+          clearTimeout(fetchTimeoutId.current as ReturnType<typeof setTimeout>);
+        }
       });
   }
 
   const getLazyQuery = useCallback(
     ({ ...args }) => {
       setIsLoading(true);
-      fetchData(args);
+      fetchData(args, retryLimit);
     },
     [url, options]
   );
